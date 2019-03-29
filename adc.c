@@ -25,6 +25,7 @@ int main(int argc, char ** argv){
 	}
 	wiringPiSetup();
 	pinMode(CS_PIN, OUTPUT);
+	pinMode(SSTRB_PIN, INPUT);
 	digitalWrite(CS_PIN, 1);
 	fd = open(argv[1], O_RDWR);
 
@@ -38,6 +39,8 @@ int main(int argc, char ** argv){
 	if ( write(fd, wr_buf, ARRAY_SIZE(wr_buf)) != ARRAY_SIZE(wr_buf)){
 		perror("Write Error!");
 	}
+	while ( digitalRead(SSTRB_PIN) );
+	
 	if ( read(fd, rd_buf, ARRAY_SIZE(rd_buf)) != ARRAY_SIZE(rd_buf)){
 		perror("Read Error!");
 		digitalWrite(CS_PIN, 0);
