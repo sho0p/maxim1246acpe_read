@@ -144,7 +144,7 @@ char * spi_xfer(int fd, char * msg){
 void printResults(char * buf){
 	uint16_t msg = (buf[1] << 8) | buf[2];
 	msg = msg >> 4;
-	if (msg == 0) return;
+	//if (msg == 0) return;
 	printf("%ld\n",msg );
 	return;
 }
