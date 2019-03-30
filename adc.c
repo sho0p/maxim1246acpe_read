@@ -136,14 +136,15 @@ int main(int argc, char ** argv){
 		printf("%s: Device %s is not found\n", argv[0], argv[1]);
 		exit(1);
 	}
-	spi_write(fd, TB1);	
-//	while ( (digitalRead(SSTRB_PIN)) );
-	usleep(10);
-	char * buf = spi_read(fd);
-	for (int i  = 0; i < ARRAY_SIZE(buf); ++i){
-		printf("0x%02X ", &buf[i]);
+	while(1){
+		spi_write(fd, TB1);	
+		usleep(10);
+		char * buf = spi_read(fd);
+		for (int i  = 0; i < ARRAY_SIZE(buf); ++i){
+			printf("0x%02X ", &buf[i]);
+		}
+		printf("\n");
 	}
-	printf("\n");
 	close(fd);
 	return 0;
 }
