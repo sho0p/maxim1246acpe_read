@@ -34,19 +34,19 @@ int spi_init(char filename[40]){
 	}
 			if (ioctl(file, SPI_IOC_WR_MODE, &mode)<0)   {
                 perror("can't set spi mode");
-                return;
+                return -1;
                 }
         
  
             if (ioctl(file, SPI_IOC_RD_MODE, &mode) < 0)
                 {
                 perror("SPI rd_mode");
-                return;
+                return -1;
                 }
             if (ioctl(file, SPI_IOC_RD_LSB_FIRST, &lsb) < 0)
                 {
                 perror("SPI rd_lsb_fist");
-                return;
+                return -1;
                 }
         //sunxi supports only 8 bits
         /*
@@ -59,7 +59,7 @@ int spi_init(char filename[40]){
             if (ioctl(file, SPI_IOC_RD_BITS_PER_WORD, &bits) < 0) 
                 {
                 perror("SPI bits_per_word");
-                return;
+                return -1;
                 }
         /*
             if (ioctl(file, SPI_IOC_WR_MAX_SPEED_HZ, &speed)<0)  
@@ -71,7 +71,7 @@ int spi_init(char filename[40]){
             if (ioctl(file, SPI_IOC_RD_MAX_SPEED_HZ, &speed) < 0) 
                 {
                 perror("SPI max_speed_hz");
-                return;
+                return -1;
                 }
      
  
@@ -98,7 +98,7 @@ char * spi_xfer(int file){
 	int status = ioctl(file, SPI_IOC_MESSAGE(2), xfer);
 	if ( status < 0){
 		perror("SPI_IOC_MESSAGE");
-		return;
+		return buf;
 	}
 	com_serial = 1;
 	failcount = 0;
