@@ -142,7 +142,7 @@ char * spi_xfer(int fd, char * msg){
 	return retbuf;
 }
 void printResults(char * buf){
-	unsigned uint16_t msg = (buf[1] << 8) | buf[2];
+	uint16_t msg = (buf[1] << 8) | buf[2];
 	printf("%ld\n", ~(msg >> 4) );
 }
 void printResultsHex(char * buf){
