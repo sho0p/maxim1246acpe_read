@@ -89,7 +89,7 @@ int spi_init(char filename[40]){
 	return file;
 }
 
-char * spi_xfer(int file){
+char * spi_read(int file){
 	char buf[32];
 	xfer[0].tx_buf =(unsigned long) wr_buf;
 	xfer[0].len = 3;
@@ -105,14 +105,29 @@ char * spi_xfer(int file){
 	return buf;
 }
 
+void spi_write(int fd, char * msg){
+	xfer[0].tx_buf = (unsigned long) msg;
+	xfer[0].len = ARRAY_SIZE(msg);
+	int status = ioctl(file, SPI_IOC_MESSAGE(2), xfer);
+	if(status < 0){
+		perror("SPI_IOC_MESSAGE");
+		return;
+	}
+	com_serial = 1;
+	failcount = 0;
+	return buf;
+}
+
 int main(int argc, char ** argv){
 	int i;
-	char wr_buf[] = {TB1, RDMSG, RDMSG};
+	char wr_buf[] = {TB1, RDMSG, RDMSG};te()
 	char rd_buf[3];;
 	if ( argc < 2){
 		printf("Usage:\n%s [device]\n", argv[0]);
 		exit(1);
 	}
+	wiringPiSetup();
+	pinMode(SSTRB_PIN, INPUT);
 	fd =  spi_init(argv[1]);
 	//fd = open(argv[1], O_RDWR);
 	printf("Initial result = %d\n", fd);
@@ -121,7 +136,10 @@ int main(int argc, char ** argv){
 		printf("%s: Device %s is not found\n", argv[0], argv[1]);
 		exit(1);
 	}
-	char * buf = spi_xfer(fd);
+	spi_write(fd, TB1);	
+	while ( !(digitalRead(SSTRB_PIN)) );
+	usleep(5);
+	char * buf = spi_read(fd);
 	for (int i  = 0; i < ARRAY_SIZE(buf); ++i){
 		printf("0x%02X ", buf[i]);
 	}
