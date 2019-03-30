@@ -166,7 +166,7 @@ int main(int argc, char ** argv){
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
 		for (int i  = 0; i < ARRAY_SIZE(buf); i++){
-			printf("0x%02X ", *(buf[i]));
+			printf("0x%02X ", *((__u8)buf[i]));
 		}
 		printf("\n");
 	}
