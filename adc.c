@@ -122,33 +122,15 @@ void spi_write(int fd, char * msg){
 
 char * spi_xfer(int fd, char * msg){
 	int status;
-	static char buf1[8], buf2[8], buf3[8], retbuf[24];
+	static char buf[24], retbuf[24];
 //	memset(buf, 0, sizeof(buf));
-	buf1[0] = msg[0];
-	buf2[0] = msg[1];
-	buf3[0] = msg[2];
-	xfer[0].tx_buf = (unsigned long) buf1;
-	xfer[0].len = 1;
+	buf[0] = msg[0];
+	buf[1] = msg[1];
+	buf[2] = msg[2];
+	xfer[0].tx_buf = (unsigned long) buf;
+	xfer[0].len = 3;
 	xfer[1].rx_buf = (unsigned long) retbuf;
-	xfer[1].len = 1;
-	status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
-	if (status < 0){
-		perror("X_SPI_IOC_MESSAGE");
-		return;
-	}
-	xfer[0].tx_buf = (unsigned long) buf2;
-	xfer[0].len = 1;
-	xfer[1].rx_buf = (unsigned long) retbuf;
-	xfer[1].len = 1;
-	status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
-	if (status < 0){
-		perror("X_SPI_IOC_MESSAGE");
-		return;
-	}
-	xfer[0].tx_buf = (unsigned long) buf3;
-	xfer[0].len = 1;
-	xfer[1].rx_buf = (unsigned long) retbuf;
-	xfer[1].len = 1;
+	xfer[1].len = 3;
 	status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
 	if (status < 0){
 		perror("X_SPI_IOC_MESSAGE");
