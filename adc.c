@@ -142,7 +142,10 @@ char * spi_xfer(int fd, char * msg){
 	return retbuf;
 }
 void printResults(char * buf){
-	printf("%d\n", ((buf[1] << 8) && 0x0F) | buf[2]);
+	printf("%d\n", ((buf[1] && 0x0F) << 8)  | buf[2]);
+}
+void printResultsHex(char * buf){
+	printf("0x")
 }
 int main(int argc, char ** argv){
 	int i;
