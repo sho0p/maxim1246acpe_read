@@ -115,7 +115,7 @@ void spi_write(int fd, char * msg){
 	}
 	com_serial = 1;
 	failcount = 0;
-	return buf;
+	return;
 }
 
 int main(int argc, char ** argv){
