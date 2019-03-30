@@ -169,7 +169,6 @@ int main(int argc, char ** argv){
 			printf("0x%02X ", &buf[i]);
 		}
 		printf("\n");
-		printf("A whole print?");
 	}
 	close(fd);
 	return 0;
