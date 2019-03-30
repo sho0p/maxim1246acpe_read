@@ -16,9 +16,9 @@
 //using namespace std;
 
 int fd;
-extern int com_serial;
+int com_serial;
 unsigned char wr_buf[] = {TB1, RDMSG, RDMSG};
-extern int failcount;
+int failcount;
 
 struct spi_ioc_transfer xfer[2];
 
