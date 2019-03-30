@@ -141,7 +141,7 @@ int main(int argc, char ** argv){
 	usleep(5);
 	char * buf = spi_read(fd);
 	for (int i  = 0; i < ARRAY_SIZE(buf); ++i){
-		printf("0x%02X ", buf[i]);
+		printf("0x%02X ", &buf[i]);
 	}
 	printf("\n");
 	close(fd);
