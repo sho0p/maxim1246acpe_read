@@ -141,7 +141,9 @@ char * spi_xfer(int fd, char * msg){
 	failcount = 0;
 	return retbuf;
 }
-
+void printResults(char * buf){
+	printf("%d\n", (buf[1] << 8) | buf[2]);
+}
 int main(int argc, char ** argv){
 	int i;
 	char wr_buf[] = {TB1, RDMSG, RDMSG};
@@ -165,10 +167,7 @@ int main(int argc, char ** argv){
 		digitalWrite(CS_PIN, LOW);
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-		for (int i  = 0; i < ARRAY_SIZE(buf); i++){
-			printf("0x%02X ", buf[i]);
-		}
-		printf("\n");
+		printResults(buf);
 	}
 	close(fd);
 	return 0;
