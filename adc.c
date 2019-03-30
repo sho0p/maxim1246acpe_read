@@ -127,10 +127,28 @@ char * spi_xfer(int fd, char * msg){
 	buf[0] = msg[0];
 	buf[1] = msg[1];
 	buf[2] = msg[2];
-	xfer[0].tx_buf = (unsigned long) buf;
-	xfer[0].len = 3;
+	xfer[0].tx_buf = (unsigned long) buf[0];
+	xfer[0].len = 1;
 	xfer[1].rx_buf = (unsigned long) retbuf;
-	xfer[1].len = 3;
+	xfer[1].len = 1;
+	status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
+	if (status < 0){
+		perror("X_SPI_IOC_MESSAGE");
+		return;
+	}
+	xfer[0].tx_buf = (unsigned long) buf[1];
+	xfer[0].len = 1;
+	xfer[1].rx_buf = (unsigned long) retbuf;
+	xfer[1].len = 1;
+	status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
+	if (status < 0){
+		perror("X_SPI_IOC_MESSAGE");
+		return;
+	}
+	xfer[0].tx_buf = (unsigned long) buf[2];
+	xfer[0].len = 1;
+	xfer[1].rx_buf = (unsigned long) retbuf;
+	xfer[1].len = 1;
 	status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
 	if (status < 0){
 		perror("X_SPI_IOC_MESSAGE");
