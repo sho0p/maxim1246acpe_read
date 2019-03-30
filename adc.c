@@ -77,11 +77,11 @@ int spi_init(char filename[40]){
  
     printf("%s: spi mode %d, %d bits %sper word, %d Hz max\n",filename, mode, bits, lsb ? "(lsb first) " : "", speed);
 	xfer[0].cs_change = 0;
-	xfer[0].delay_usecs = 50;
+	xfer[0].delay_usecs = 10;
 	xfer[0].speed_hz = speed;
 	xfer[0].bits_per_word = 8;
 	xfer[1].cs_change = 0;
-	xfer[1].delay_usecs = 0;
+	xfer[1].delay_usecs = 10;
 	xfer[1].speed_hz = speed;
 	xfer[1].bits_per_word = 8;
 	return file;
