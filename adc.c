@@ -122,7 +122,7 @@ void spi_write(int fd, char * msg){
 
 char * spi_xfer(int fd, char * msg){
 	int status;
-	char buf[24], retbuf[24];
+	static char buf[24], retbuf[24];
 //	memset(buf, 0, sizeof(buf));
 	buf[0] = msg[0];
 	buf[1] = msg[1];
