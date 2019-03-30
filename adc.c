@@ -130,7 +130,7 @@ char * spi_xfer(int fd, char * msg){
 	xfer[0].tx_buf = (unsigned long) buf;
 	xfer[0].len = 3;
 	xfer[1].rx_buf = (unsigned long) retbuf;
-	xfer[1].len = 3;
+	xfer[1].len = 16;
 	status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
 	if (status < 0){
 		perror("X_SPI_IOC_MESSAGE");
