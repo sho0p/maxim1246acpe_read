@@ -106,10 +106,6 @@ char * spi_xfer(int file){
 }
 
 int main(int argc, char ** argv){
-//	wiringPiSPISetup(0, 500000)
-
-	//wiringPiSPIDataRW(SPI_CH, TB1, 1);
-//	wiringPi
 	int i;
 	char wr_buf[] = {TB1, RDMSG, RDMSG};
 	char rd_buf[3];;
