@@ -120,6 +120,27 @@ void spi_write(int fd, char * msg){
 	return;
 }
 
+char * spi_xfer(int fd, char * msg){
+	char buf[24], retbuf[24];
+	memset(buf, 0, sizeof(buf));
+	buf[0] = msg[0];
+	buf[1] = msg[1];
+	buf[2] = msg[2];
+	xfer[0].tx_buf = (unsigned long) buf;
+	xfer[0].len = 3;
+	xfer[1].rx_buf = (unsigned long) retbuf;
+	xfer[1].len = 3;
+	status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
+	if (status < 0){
+		perror("X_SPI_IOC_MESSAGE");
+		return;
+	}
+
+	com_serial = 1;
+	failcount = 0;
+	return retbuf;
+}
+
 int main(int argc, char ** argv){
 	int i;
 	char wr_buf[] = {TB1, RDMSG, RDMSG};
@@ -140,9 +161,9 @@ int main(int argc, char ** argv){
 		exit(1);
 	}
 	while(1){
-		spi_write(fd, TB1);	
-		usleep(10);
-		char * buf = spi_read(fd);
+		digitalWrite(CS_PIN, LOW);
+		spi_xfer(fd, wr_buf);
+		digitalWrite(CS_PIN, HIGH);
 		printf("Arraybuffer size too big %d\n", ARRAY_SIZE(buf));
 		for (int i  = 0; i < 2; i++){
 			printf("0x%02X ", &buf[i]);
