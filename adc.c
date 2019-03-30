@@ -97,7 +97,7 @@ char * spi_read(int file){
 	xfer[1].len = 3;
 	int status = ioctl(file, SPI_IOC_MESSAGE(2), xfer);
 	if ( status < 0){
-		perror("SPI_IOC_MESSAGE");
+		perror("R_SPI_IOC_MESSAGE");
 		return buf;
 	}
 	com_serial = 1;
@@ -110,7 +110,7 @@ void spi_write(int fd, char * msg){
 	xfer[0].len = ARRAY_SIZE(msg);
 	int status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
 	if(status < 0){
-		perror("SPI_IOC_MESSAGE");
+		perror("W_SPI_IOC_MESSAGE");
 		return;
 	}
 	com_serial = 1;
