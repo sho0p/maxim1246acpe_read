@@ -128,7 +128,7 @@ char * spi_xfer(int fd, char * msg){
 	buf[1] = msg[1];
 	buf[2] = msg[2];
 	xfer[0].tx_buf = (unsigned long) buf;
-	xfer[0].len = 3;
+	xfer[0].len = 1;
 	xfer[1].rx_buf = (unsigned long) retbuf;
 	xfer[1].len = 16;
 	status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
