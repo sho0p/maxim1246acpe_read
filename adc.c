@@ -143,7 +143,10 @@ char * spi_xfer(int fd, char * msg){
 }
 void printResults(char * buf){
 	uint16_t msg = (buf[1] << 8) | buf[2];
-	printf("%ld\n", (msg >> 4) );
+	msg = msg >> 4;
+	if (msg == 0) return;
+	printf("%ld\n",msg );
+	return;
 }
 void printResultsHex(char * buf){
 	printf("0x");
