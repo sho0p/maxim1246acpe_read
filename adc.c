@@ -93,7 +93,7 @@ char * spi_read(int file){
 	xfer[0].tx_buf =(unsigned long) {0x00, 0x00};
 	xfer[0].len = 2;
 	xfer[1].rx_buf = (unsigned long) buf;
-	xfer[1].len = 2;
+	xfer[1].len = 16; 
 	int status = ioctl(file, SPI_IOC_MESSAGE(2), xfer);
 	digitalWrite(CS_PIN, HIGH);
 	if ( status < 0){
