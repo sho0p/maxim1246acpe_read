@@ -123,7 +123,7 @@ void spi_write(int fd, char * msg){
 char * spi_xfer(int fd, char * msg){
 	int status;
 	char buf[24], retbuf[24];
-	memset(buf, 0, sizeof(buf));
+//	memset(buf, 0, sizeof(buf));
 	buf[0] = msg[0];
 	buf[1] = msg[1];
 	buf[2] = msg[2];
@@ -166,7 +166,7 @@ int main(int argc, char ** argv){
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
 		for (int i  = 0; i < ARRAY_SIZE(buf); i++){
-			printf("0x%02X ", *(buf + i));
+			printf("0x%02X ", buf[i]);
 		}
 		printf("\n");
 	}
