@@ -16,7 +16,6 @@
 //using namespace std;
 
 int fd;
-<<<<<<< HEAD:adc.cpp
 extern int com_serial;
 unsigned char wr_buf[] = {TB1, RDMSG, RDMSG};
 extern int failcount;
@@ -105,10 +104,6 @@ char * spi_xfer(int file){
 	failcount = 0;
 	return buf;
 }
-=======
-char wr_buf[] = {TB1, RDMSG, RDMSG};
-//char wr_buf[] = {0xFF, 0xFF, 0xFF};
->>>>>>> abe72e5b814fab757a9c725e0563c7c8dc31b5df:adc.c
 
 int main(int argc, char ** argv){
 //	wiringPiSPISetup(0, 500000)
@@ -122,46 +117,17 @@ int main(int argc, char ** argv){
 		printf("Usage:\n%s [device]\n", argv[0]);
 		exit(1);
 	}
-<<<<<<< HEAD:adc.cpp
 	fd =  spi_init(argv[1]);
 	//fd = open(argv[1], O_RDWR);
 	printf("Initial result = %d\n", fd);
-=======
-	wiringPiSetup();
-	pinMode(CS_PIN, OUTPUT);
-	pinMode(SSTRB_PIN, INPUT);
-	digitalWrite(CS_PIN, 1);
-	fd = open(argv[1], O_RDWR);
->>>>>>> abe72e5b814fab757a9c725e0563c7c8dc31b5df:adc.c
 
 	if ( fd <= 0 ) {
 		printf("%s: Device %s is not found\n", argv[0], argv[1]);
 		exit(1);
 	}
-<<<<<<< HEAD:adc.cpp
 	char * buf = spi_xfer(fd);
 	for (int i  = 0; i < ARRAY_SIZE(buf); ++i){
 		printf("0x%02X ", buf[i]);
-=======
-
-	
-	digitalWrite(CS_PIN, 0);
-	if ( write(fd, wr_buf, ARRAY_SIZE(wr_buf)) != ARRAY_SIZE(wr_buf)){
-		perror("Write Error!");
-	}
-	while ( digitalRead(SSTRB_PIN) );
-	
-	if ( read(fd, rd_buf, ARRAY_SIZE(rd_buf)) != ARRAY_SIZE(rd_buf)){
-		perror("Read Error!");
-		digitalWrite(CS_PIN, 0);
-	}
-	else
-	{
-		digitalWrite(CS_PIN, 0);
-		for (i = 0; i < ARRAY_SIZE(rd_buf); i++){
-			printf("0x%02X ", rd_buf[i]);
-		}
->>>>>>> abe72e5b814fab757a9c725e0563c7c8dc31b5df:adc.c
 	}
 	printf("\n");
 	close(fd);
