@@ -25,7 +25,7 @@ struct spi_ioc_transfer xfer[2];
 int spi_init(char filename[40]){
 	int file;
 	__u8	mode, lsb, bits;
-	__u32 	speed = 2500000;
+	__u32 	speed = 1000000;
 
 	if ( (file = open(filename, O_RDWR)) < 0){
 		printf("Failed to open bus.");
