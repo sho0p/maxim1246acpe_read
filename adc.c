@@ -137,7 +137,7 @@ int main(int argc, char ** argv){
 		exit(1);
 	}
 	spi_write(fd, TB1);	
-	while ( !(digitalRead(SSTRB_PIN)) );
+	while ( (digitalRead(SSTRB_PIN)) );
 	usleep(5);
 	char * buf = spi_read(fd);
 	for (int i  = 0; i < ARRAY_SIZE(buf); ++i){
