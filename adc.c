@@ -165,8 +165,7 @@ int main(int argc, char ** argv){
 		digitalWrite(CS_PIN, LOW);
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-		printf("Arraybuffer size too big %d\n", ARRAY_SIZE(buf));
-		for (int i  = 0; i < 2; i++){
+		for (int i  = 0; i < ARRAY_SIZE(buf); i++){
 			printf("0x%02X ", &buf[i]);
 		}
 		printf("\n");
