@@ -137,8 +137,8 @@ int main(int argc, char ** argv){
 		exit(1);
 	}
 	spi_write(fd, TB1);	
-	while ( (digitalRead(SSTRB_PIN)) );
-	usleep(5);
+//	while ( (digitalRead(SSTRB_PIN)) );
+	usleep(10);
 	char * buf = spi_read(fd);
 	for (int i  = 0; i < ARRAY_SIZE(buf); ++i){
 		printf("0x%02X ", &buf[i]);
