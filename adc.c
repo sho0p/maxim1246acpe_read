@@ -1,5 +1,6 @@
 #include <wiringPi.h>
 #include <errno.h>
+#include "adc.h"
 #include <unistd.h>
 
 static const int CHANNEL = 1;
