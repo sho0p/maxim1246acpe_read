@@ -162,7 +162,7 @@ int main(int argc, char ** argv){
 	}
 	while(1){
 		digitalWrite(CS_PIN, LOW);
-		spi_xfer(fd, wr_buf);
+		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
 		printf("Arraybuffer size too big %d\n", ARRAY_SIZE(buf));
 		for (int i  = 0; i < 2; i++){
