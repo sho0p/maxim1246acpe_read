@@ -172,6 +172,7 @@ int main(int argc, char ** argv){
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
 		printResults(buf);
+		usleep(150);
 	}
 	close(fd);
 	return 0;
