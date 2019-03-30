@@ -143,6 +143,7 @@ int main(int argc, char ** argv){
 		spi_write(fd, TB1);	
 		usleep(10);
 		char * buf = spi_read(fd);
+		printf("Arraybuffer size too big", ARRAY_SIZE(buf));
 		for (int i  = 0; i < ARRAY_SIZE(buf); ++i){
 			printf("0x%02X ", &buf[i]);
 		}
