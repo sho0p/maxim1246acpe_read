@@ -108,7 +108,7 @@ char * spi_read(int file){
 void spi_write(int fd, char * msg){
 	xfer[0].tx_buf = (unsigned long) msg;
 	xfer[0].len = ARRAY_SIZE(msg);
-	int status = ioctl(file, SPI_IOC_MESSAGE(2), xfer);
+	int status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
 	if(status < 0){
 		perror("SPI_IOC_MESSAGE");
 		return;
@@ -120,7 +120,7 @@ void spi_write(int fd, char * msg){
 
 int main(int argc, char ** argv){
 	int i;
-	char wr_buf[] = {TB1, RDMSG, RDMSG};te()
+	char wr_buf[] = {TB1, RDMSG, RDMSG};
 	char rd_buf[3];;
 	if ( argc < 2){
 		printf("Usage:\n%s [device]\n", argv[0]);
