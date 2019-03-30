@@ -90,12 +90,14 @@ int spi_init(char filename[40]){
 }
 
 char * spi_read(int file){
+	digitalWrite(CS_PIN, LOW);
 	char buf[32];
 	xfer[0].tx_buf =(unsigned long) wr_buf;
 	xfer[0].len = 3;
 	xfer[1].rx_buf = (unsigned long) buf;
 	xfer[1].len = 3;
 	int status = ioctl(file, SPI_IOC_MESSAGE(2), xfer);
+	digitalWrite(CS_PIN, HIGH);
 	if ( status < 0){
 		perror("R_SPI_IOC_MESSAGE");
 		return buf;
@@ -106,9 +108,11 @@ char * spi_read(int file){
 }
 
 void spi_write(int fd, char * msg){
+	digitalWrite(CS_PIN, LOW);
 	xfer[0].tx_buf = (unsigned long) &msg;
 	xfer[0].len = ARRAY_SIZE(msg);
 	int status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
+	digitalWrite(CS_PIN, HIGH);
 	if(status < 0){
 		perror("W_SPI_IOC_MESSAGE");
 		return;
@@ -127,6 +131,7 @@ int main(int argc, char ** argv){
 		exit(1);
 	}
 	wiringPiSetup();
+	digitalWrite(CS_PIN, HIGH);
 	pinMode(SSTRB_PIN, INPUT);
 	fd =  spi_init(argv[1]);
 	//fd = open(argv[1], O_RDWR);
