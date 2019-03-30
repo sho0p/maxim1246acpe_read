@@ -106,7 +106,7 @@ char * spi_read(int file){
 }
 
 void spi_write(int fd, char * msg){
-	xfer[0].tx_buf = (unsigned long) msg;
+	xfer[0].tx_buf = (unsigned long) &msg;
 	xfer[0].len = ARRAY_SIZE(msg);
 	int status = ioctl(fd, SPI_IOC_MESSAGE(2), xfer);
 	if(status < 0){
