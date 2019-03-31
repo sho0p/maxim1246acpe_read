@@ -1,5 +1,8 @@
 #define SPI_CH      (0x0)
 #define TB1         (0b10011111)
+#define TB2         (0b11011111)
+#define TB3         (0b10101111)
+#define TB4         (0b11101111)
 #define TB1_SIZE    (1)
 #define RDMSG       (0x00)
 #define RDMSG_SIZE  (1)
