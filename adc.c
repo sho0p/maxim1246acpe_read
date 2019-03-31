@@ -179,7 +179,6 @@ void printResultsHex(char * buf){
 
 void printResults4ch(char * buf[]){
 	for (int i = 0; i < 4; i++){
-		printf("segfaulting at %d buffer", i+1);
 		uint16_t  msg = (buf[i][0] << 5) | (buf[i][1] >> 3);
 		float msg_filt = (float)msg;
 		msg_filt = lpf(msg_filt);
