@@ -180,6 +180,7 @@ void printResultsHex(char * buf){
 void printResults4ch(char * buf1, char* buf2, char* buf3, char* buf4){
 	char ** buf = {buf1, buf2, buf3, buf4};
 	for (int i = 0; i < 4; i++){
+	//	printf("segfaulting at %d buffer", i+1);
 		uint16_t  msg = (buf[i][0] << 5) | (buf[i][1] >> 3);
 		float msg_filt = (float)msg;
 		msg_filt = lpf(msg_filt);
@@ -212,22 +213,21 @@ int main(int argc, char ** argv){
 	while (1){
 		wr_buf[0] = TB1;
 		digitalWrite(CS_PIN, LOW);
-		char * buf1 = spi_xfer(fd, wr_buf);
+		static char * buf1 = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
 		wr_buf[0] = TB2;
 		digitalWrite(CS_PIN, LOW);
-		char * buf2 = spi_xfer(fd, wr_buf);
+		static char * buf2 = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
 		wr_buf[0] = TB3;
 		digitalWrite(CS_PIN, LOW);
-		char * buf3 = spi_xfer(fd, wr_buf);
+		static char * buf3 = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
 		wr_buf[0] = TB4;
 		digitalWrite(CS_PIN, LOW);
-		char * buf4 = spi_xfer(fd, wr_buf);
+		static char * buf4 = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
 		printResults4ch(buf1, buf2, buf3, buf4);
-//		usleep(1500);
 	}
 	close(fd);
 	return 0;
