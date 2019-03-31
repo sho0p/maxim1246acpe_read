@@ -175,7 +175,7 @@ void printResults(char * buf){
 }
 
 void printResultsHex(char * buf){
-	printf("0x");
+	printf("0x%X 0x%X 0x%x",buf[0], buf[1], buf[2]);
 }
 int main(int argc, char ** argv){
 	int i;
@@ -201,9 +201,8 @@ int main(int argc, char ** argv){
 		digitalWrite(CS_PIN, LOW);
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-//		printf("i: %d\n",i);
-		printResults(buf);
-//		usleep(1500);
+		printResultsHex(buf);
+		usleep(1500);
 	}
 	close(fd);
 	return 0;
