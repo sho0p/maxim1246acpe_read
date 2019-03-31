@@ -143,6 +143,15 @@ char * spi_xfer(int fd, char * msg){
 	failcount = 0;
 	return retbuf;
 }
+
+float lpf(float sig){
+	if(prev_dat == 0){
+		prev_dat = sig;
+		return sig;
+	}
+	return prev_dat - (lpf_beta * (prev_dat-sig));
+}
+
 void printResults(char * buf){
 	uint16_t msg = (buf[1] << 8) | buf[2];
 	msg = msg >> 4;
@@ -152,13 +161,7 @@ void printResults(char * buf){
 	printf("%lf.2\n",msg_filt );
 	return;
 }
-float lpf(float sig){
-	if(prev_dat == 0){
-		prev_dat = sig;
-		return sig;
-	}
-	return prev_dat - (lpf_beta * (prev_dat-sig));
-}
+
 void printResultsHex(char * buf){
 	printf("0x");
 }
