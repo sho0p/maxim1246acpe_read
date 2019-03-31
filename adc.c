@@ -214,23 +214,23 @@ int main(int argc, char ** argv){
 		wr_buf[0] = TB1;
 		digitalWrite(CS_PIN, LOW);
 		static char * buf1 = spi_xfer(fd, wr_buf);
-		memset(buf1, 0 sizeof(buf1));
+		memset(buf1, 0, sizeof(buf1));
 		digitalWrite(CS_PIN, HIGH);
 		wr_buf[0] = TB2;
 		digitalWrite(CS_PIN, LOW);
 		static char * buf2 = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-		memset(buf2, 0 sizeof(buf2));
+		memset(buf2, 0, sizeof(buf2));
 		wr_buf[0] = TB3;
 		digitalWrite(CS_PIN, LOW);
 		static char * buf3 = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-		memset(buf3, 0 sizeof(buf3));
+		memset(buf3, 0, sizeof(buf3));
 		wr_buf[0] = TB4;
 		digitalWrite(CS_PIN, LOW);
 		static char * buf4 = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-		memset(buf4, 0 sizeof(buf4));
+		memset(buf4, 0, sizeof(buf4));
 		printResults4ch(buf1, buf2, buf3, buf4);
 	}
 	close(fd);
