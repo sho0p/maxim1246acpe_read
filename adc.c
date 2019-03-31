@@ -209,6 +209,8 @@ int main(int argc, char ** argv){
 		printf("%s: Device %s is not found\n", argv[0], argv[1]);
 		exit(1);
 	}
+
+		printf("segfaulting he1");
 	while (1){
 		wr_buf[0] = TB1;
 		digitalWrite(CS_PIN, LOW);
