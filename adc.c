@@ -150,7 +150,7 @@ float lpf(float sig){
 		return sig;
 	}
 	float tmp = sig;
-	sig = lpf_beta*prev_dat - (lpf_beta * (prev_dat-sig));
+	sig = prev_dat - (lpf_beta * (prev_dat-sig));
 	prev_dat = tmp;
 	return sig;
 }
