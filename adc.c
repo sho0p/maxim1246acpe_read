@@ -182,7 +182,7 @@ void printResults4ch(char * buf[]){
 		uint16_t  msg = (buf[i][0] << 5) | (buf[i][1] >> 3);
 		float msg_filt = (float)msg;
 		msg_filt = lpf(msg_filt);
-		printf("%.2f",msg_filt);
+		printf("%.2f ",msg_filt);
 	}
 	printf("\n");
 	return;
