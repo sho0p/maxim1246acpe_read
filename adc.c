@@ -205,7 +205,6 @@ int main(int argc, char ** argv){
 	lpf_beta = atof(argv[2]);
 	//fd = open(argv[1], O_RDWR);
 	printf("Initial result = %d\n", fd);
-
 	if ( fd <= 0 ) {
 		printf("%s: Device %s is not found\n", argv[0], argv[1]);
 		exit(1);
@@ -213,6 +212,7 @@ int main(int argc, char ** argv){
 	while (1){
 		wr_buf[0] = TB1;
 		digitalWrite(CS_PIN, LOW);
+		printf("segfaulting he");
 		char * buf1 = spi_xfer(fd, wr_buf);
 		memset(buf1, 0, sizeof(buf1));
 		digitalWrite(CS_PIN, HIGH);
