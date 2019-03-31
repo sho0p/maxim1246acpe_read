@@ -165,7 +165,7 @@ uint32_t reverse(uint32_t x, int bits){
 }
 
 void printResults(char * buf){
-	uint16_t msg = (buf[1] << 7) | buf[2];
+	uint16_t msg = (buf[0] << 7) | buf[1];
 	msg = msg >> 3;
 	float msg_filt = (float)msg;//(float)reverse((uint32_t)msg, 12);
 	msg_filt = lpf(msg_filt);
@@ -175,7 +175,7 @@ void printResults(char * buf){
 }
 
 void printResultsHex(char * buf){
-	printf("0x%X 0x%X 0x%x",buf[0], buf[1], buf[2]);
+	printf("0x%X 0x%X 0x%X\n",buf[0], buf[1], buf[2]);
 }
 int main(int argc, char ** argv){
 	int i;
@@ -197,11 +197,11 @@ int main(int argc, char ** argv){
 		printf("%s: Device %s is not found\n", argv[0], argv[1]);
 		exit(1);
 	}
-	for(i = 0; i < 1000; i++){
+	while (1){
 		digitalWrite(CS_PIN, LOW);
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-		printResultsHex(buf);
+		printResults(buf);
 		usleep(1500);
 	}
 	close(fd);
