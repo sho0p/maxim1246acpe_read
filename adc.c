@@ -18,7 +18,9 @@
 int fd;
 int com_serial;
 unsigned char wr_buf[] = {TB1, RDMSG, RDMSG};
+const float lpf_beta = 0.025;
 int failcount;
+float prev_dat = 0;
 
 struct spi_ioc_transfer xfer[2];
 
@@ -144,9 +146,18 @@ char * spi_xfer(int fd, char * msg){
 void printResults(char * buf){
 	uint16_t msg = (buf[1] << 8) | buf[2];
 	msg = msg >> 4;
+	float msg_filt = (float)msg;
+	msg_filt = lpf(msg_filt);
 	//if (msg == 0) return;
-	printf("%ld\n",msg );
+	printf("%lf.2\n",msg_filt );
 	return;
+}
+float lpf(float sig){
+	if(prev_dat == 0){
+		prev_dat = sig;
+		return sig;
+	}
+	return prev_dat - (lpf_beta * (prev_dat-sig));
 }
 void printResultsHex(char * buf){
 	printf("0x");
