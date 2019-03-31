@@ -231,6 +231,7 @@ int main(int argc, char ** argv){
 		char * buf4 = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
 		memset(buf4, 0, sizeof(buf4));
+		printf("please for the love of god please");
 		printResults4ch(buf1, buf2, buf3, buf4);
 	}
 	close(fd);
