@@ -20,7 +20,7 @@ int com_serial;
 unsigned char wr_buf[] = {TB1, RDMSG, RDMSG};
 float lpf_beta = 0.025;
 int failcount;
-float prev_dat = 0;
+float prev_dat[4] = {0, 0, 0, 0};
 
 struct spi_ioc_transfer xfer[2];
 
@@ -144,30 +144,21 @@ static char * spi_xfer(int fd, char * msg){
 	return retbuf;
 }
 
-float lpf(float sig){
-	if(prev_dat == 0){
-		prev_dat = sig;
+float lpf(int ind, float sig){
+	if(prev_dat[ind] == 0){
+		prev_dat[ind] = sig;
 		return sig;
 	}
 	float tmp = sig;
-	sig = prev_dat - (lpf_beta * (prev_dat-sig));
-	prev_dat = tmp;
+	sig = prev_dat[ind] - (lpf_beta * (prev_dat[ind]-sig));
+	prev_dat[ind] = tmp;
 	return sig;
-}
-
-uint32_t reverse(uint32_t x, int bits){
-	x = ((x & 0x55555555) << 1) | ((x & 0xAAAAAAAA) >> 1); // Swap _<>_
-    x = ((x & 0x33333333) << 2) | ((x & 0xCCCCCCCC) >> 2); // Swap __<>__
-    x = ((x & 0x0F0F0F0F) << 4) | ((x & 0xF0F0F0F0) >> 4); // Swap ____<>____
-    x = ((x & 0x00FF00FF) << 8) | ((x & 0xFF00FF00) >> 8); // Swap ...
-    x = ((x & 0x0000FFFF) << 16) | ((x & 0xFFFF0000) >> 16); // Swap ...
-    return x >> (32 - bits);
 }
 
 void printResults(char * buf){
 	uint16_t msg = (buf[0] << 5) | (buf[1]>>3);
 	float msg_filt = (float)msg;//(float)reverse((uint32_t)msg, 12);
-	msg_filt = lpf(msg_filt);
+	msg_filt = lpf(0,msg_filt);
 	//if (msg == 0) return;
 	printf("%.2f\n",msg_filt );
 	return;
@@ -181,7 +172,7 @@ void printResults4ch(char * buf[]){
 	for (int i = 0; i < 4; i++){
 		uint16_t  msg = (buf[i][0] << 5) | (buf[i][1] >> 3);
 		float msg_filt = (float)msg;
-		msg_filt = lpf(msg_filt);
+		msg_filt = lpf(i,msg_filt);
 		printf("%.2f ",msg_filt);
 	}
 	printf("\n");
