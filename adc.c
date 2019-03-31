@@ -165,7 +165,7 @@ uint32_t reverse(uint32_t x, int bits){
 }
 
 void printResults(char * buf){
-	uint16_t msg = (buf[1] << 7) | buf[2];
+	uint16_t msg = (buf[0] << 7) | buf[1];
 	msg = msg >> 3;
 	float msg_filt = (float)msg;//(float)reverse((uint32_t)msg, 12);
 	msg_filt = lpf(msg_filt);
@@ -201,7 +201,7 @@ int main(int argc, char ** argv){
 		digitalWrite(CS_PIN, LOW);
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-		printResultsHex(buf);
+		printResults(buf);
 		usleep(1500);
 	}
 	close(fd);
