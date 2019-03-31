@@ -160,7 +160,7 @@ void printResults(char * buf){
 	float msg_filt = (float)msg;//(float)reverse((uint32_t)msg, 12);
 	msg_filt = lpf(0,msg_filt);
 	//if (msg == 0) return;
-	printf("%.2f\n",msg_filt );
+	printf("%.2f, ",msg_filt );
 	return;
 }
 
@@ -198,16 +198,16 @@ int main(int argc, char ** argv){
 		printf("%s: Device %s is not found\n", argv[0], argv[1]);
 		exit(1);
 	}
-	char * buf[4];
 	char wr_msg[] = {TB1, TB2, TB3, TB4};
 	while (1){
 		for(i = 0; i < 4; i++){
 			wr_buf[0] = wr_msg[i];
 			digitalWrite(CS_PIN, LOW);
-			buf[i] = spi_xfer(fd, wr_buf);
+			char * buf = spi_xfer(fd, wr_buf);
 			digitalWrite(CS_PIN, HIGH);
+			printResults(buf);
 		}
-		printResults4ch(buf);
+		printf("\n");
 		// wr_buf[0] = TB1;
 		// digitalWrite(CS_PIN, LOW);
 		// printf("segfaulting he");
