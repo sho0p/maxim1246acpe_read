@@ -209,7 +209,7 @@ int main(int argc, char ** argv){
 		exit(1);
 	}
 	char * buf[4];
-	char wr_msg = {TB1, TB2, TB3, TB4};
+	char wr_msg[] = {TB1, TB2, TB3, TB4};
 	while (1){
 		for(i = 0; i < 4; i++){
 			wr_buf[0] = wr_msg[i];
