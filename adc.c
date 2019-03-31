@@ -165,8 +165,7 @@ uint32_t reverse(uint32_t x, int bits){
 }
 
 void printResults(char * buf){
-	uint16_t msg = (buf[0] << 7) | buf[1];
-	msg = msg >> 3;
+	uint16_t msg = (buf[0] << 9) | (buf[1]>>3);
 	float msg_filt = (float)msg;//(float)reverse((uint32_t)msg, 12);
 	msg_filt = lpf(msg_filt);
 	//if (msg == 0) return;
