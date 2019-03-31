@@ -177,8 +177,7 @@ void printResultsHex(char * buf){
 	printf("0x%X 0x%X 0x%X\n",buf[0], buf[1], buf[2]);
 }
 
-void printResults4ch(char * buf1, char* buf2, char* buf3, char* buf4){
-	char ** buf = {buf1, buf2, buf3, buf4};
+void printResults4ch(char * buf[]){
 	for (int i = 0; i < 4; i++){
 		printf("segfaulting at %d buffer", i+1);
 		uint16_t  msg = (buf[i][0] << 5) | (buf[i][1] >> 3);
@@ -209,32 +208,39 @@ int main(int argc, char ** argv){
 		printf("%s: Device %s is not found\n", argv[0], argv[1]);
 		exit(1);
 	}
-
-		printf("segfaulting he1");
+	char * buf[4];
+	char wr_msg = {TB1, TB2, TB3, TB4};
 	while (1){
-		wr_buf[0] = TB1;
-		digitalWrite(CS_PIN, LOW);
-		printf("segfaulting he");
-		char * buf1 = spi_xfer(fd, wr_buf);
-		memset(buf1, 0, sizeof(buf1));
-		digitalWrite(CS_PIN, HIGH);
-		wr_buf[0] = TB2;
-		digitalWrite(CS_PIN, LOW);
-		char * buf2 = spi_xfer(fd, wr_buf);
-		digitalWrite(CS_PIN, HIGH);
-		memset(buf2, 0, sizeof(buf2));
-		wr_buf[0] = TB3;
-		digitalWrite(CS_PIN, LOW);
-		char * buf3 = spi_xfer(fd, wr_buf);
-		digitalWrite(CS_PIN, HIGH);
-		memset(buf3, 0, sizeof(buf3));
-		wr_buf[0] = TB4;
-		digitalWrite(CS_PIN, LOW);
-		char * buf4 = spi_xfer(fd, wr_buf);
-		digitalWrite(CS_PIN, HIGH);
-		memset(buf4, 0, sizeof(buf4));
-		printf("please for the love of god please");
-		printResults4ch(buf1, buf2, buf3, buf4);
+		for(i = 0; i < 4; i++){
+			wr_buf[0] = wr_msg[i];
+			digitalWrite(CS_PIN, LOW);
+			buf[i] = spi_xfer(fd, wr_buf);
+			digitalWrite(CS_PIN, HIGH);
+		}
+		printResults4ch(buf);
+		// wr_buf[0] = TB1;
+		// digitalWrite(CS_PIN, LOW);
+		// printf("segfaulting he");
+		// char * buf1 = spi_xfer(fd, wr_buf);
+		// memset(buf1, 0, sizeof(buf1));
+		// digitalWrite(CS_PIN, HIGH);
+		// wr_buf[0] = TB2;
+		// digitalWrite(CS_PIN, LOW);
+		// char * buf2 = spi_xfer(fd, wr_buf);
+		// digitalWrite(CS_PIN, HIGH);
+		// memset(buf2, 0, sizeof(buf2));
+		// wr_buf[0] = TB3;
+		// digitalWrite(CS_PIN, LOW);
+		// char * buf3 = spi_xfer(fd, wr_buf);
+		// digitalWrite(CS_PIN, HIGH);
+		// memset(buf3, 0, sizeof(buf3));
+		// wr_buf[0] = TB4;
+		// digitalWrite(CS_PIN, LOW);
+		// char * buf4 = spi_xfer(fd, wr_buf);
+		// digitalWrite(CS_PIN, HIGH);
+		// memset(buf4, 0, sizeof(buf4));
+		// printf("please for the love of god please");
+		// printResults4ch(buf1, buf2, buf3, buf4);
 	}
 	close(fd);
 	return 0;
