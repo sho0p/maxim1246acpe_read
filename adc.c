@@ -153,8 +153,8 @@ float lpf(float sig){
 }
 
 void printResults(char * buf){
-	uint16_t msg = (buf[1] << 8) | buf[2];
-	msg = msg >> 4;
+	uint16_t msg = (buf[1] << 7) | buf[2];
+	msg = msg >> 3;
 	float msg_filt = (float)msg;
 	msg_filt = lpf(msg_filt);
 	//if (msg == 0) return;
