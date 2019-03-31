@@ -200,7 +200,7 @@ int main(int argc, char ** argv){
 		digitalWrite(CS_PIN, LOW);
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-		printResultsHex(buf);
+		printResults(buf);
 		usleep(1500);
 	}
 	close(fd);
