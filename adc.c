@@ -122,7 +122,7 @@ void spi_write(int fd, char * msg){
 	return;
 }
 
-char * spi_xfer(int fd, char * msg){
+static char * spi_xfer(int fd, char * msg){
 	int status;
 	static char buf[24], retbuf[24];
 //	memset(buf, 0, sizeof(buf));
@@ -214,7 +214,6 @@ int main(int argc, char ** argv){
 		wr_buf[0] = TB1;
 		digitalWrite(CS_PIN, LOW);
 		static char * buf1 = spi_xfer(fd, wr_buf);
-		printf("Segfaulting at buffer 1");
 		digitalWrite(CS_PIN, HIGH);
 		wr_buf[0] = TB2;
 		digitalWrite(CS_PIN, LOW);
