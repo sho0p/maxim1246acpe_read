@@ -158,7 +158,7 @@ void printResults(char * buf){
 	float msg_filt = (float)msg;
 	msg_filt = lpf(msg_filt);
 	//if (msg == 0) return;
-	printf("%lf.2\n",msg_filt );
+	printf("%f.2\n",msg_filt );
 	return;
 }
 
