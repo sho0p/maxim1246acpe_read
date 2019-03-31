@@ -205,7 +205,7 @@ int main(int argc, char ** argv){
 			digitalWrite(CS_PIN, LOW);
 			char * buf = spi_xfer(fd, wr_buf);
 			digitalWrite(CS_PIN, HIGH);
-			printResults(i,buf);
+			printResultsHex(i,buf);
 		}
 		printf("\n");
 		// wr_buf[0] = TB1;
