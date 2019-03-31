@@ -214,6 +214,7 @@ int main(int argc, char ** argv){
 		wr_buf[0] = TB1;
 		digitalWrite(CS_PIN, LOW);
 		static char * buf1 = spi_xfer(fd, wr_buf);
+		printf("Segfaulting at buffer 1");
 		digitalWrite(CS_PIN, HIGH);
 		wr_buf[0] = TB2;
 		digitalWrite(CS_PIN, LOW);
