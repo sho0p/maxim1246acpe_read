@@ -180,7 +180,7 @@ void printResultsHex(char * buf){
 void printResults4ch(char * buf1, char* buf2, char* buf3, char* buf4){
 	char ** buf = {buf1, buf2, buf3, buf4};
 	for (int i = 0; i < 4; i++){
-	//	printf("segfaulting at %d buffer", i+1);
+		printf("segfaulting at %d buffer", i+1);
 		uint16_t  msg = (buf[i][0] << 5) | (buf[i][1] >> 3);
 		float msg_filt = (float)msg;
 		msg_filt = lpf(msg_filt);
