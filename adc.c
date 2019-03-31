@@ -149,7 +149,10 @@ float lpf(float sig){
 		prev_dat = sig;
 		return sig;
 	}
-	return prev_dat - (lpf_beta * (prev_dat-sig));
+	float tmp = sig;
+	sig = prev_dat - (lpf_beta * (prev_dat-sig));
+	prev_dat = tmp;
+	return sig;
 }
 
 uint32_t reverse(uint32_t x, int bits){
