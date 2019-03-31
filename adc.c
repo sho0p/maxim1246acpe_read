@@ -149,7 +149,7 @@ float lpf(float sig){
 		prev_dat = sig;
 		return sig;
 	}
-	return lpf_beta * prev_dat - (lpf_beta * (prev_dat-sig));
+	return  prev_dat - (lpf_beta * (prev_dat-sig));
 }
 
 void printResults(char * buf){
