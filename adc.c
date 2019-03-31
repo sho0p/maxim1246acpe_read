@@ -176,6 +176,19 @@ void printResults(char * buf){
 void printResultsHex(char * buf){
 	printf("0x%X 0x%X 0x%X\n",buf[0], buf[1], buf[2]);
 }
+
+void printResults4ch(char * buf1, char* buf2, char* buf3, char* buf4){
+	char ** buf = {buf1, buf2, buf3, buf4};
+	for (int i = 0; i < 4; i++){
+		uint16_t  msg = (buf[i][0] << 5) | (buf[i][1] >> 3);
+		float msg_filt = float(msg);
+		msg_filt = lpf(msg_filt);
+		printf("%.2f",msg_filt);
+	}
+	printf("\n");
+	return;
+}
+
 int main(int argc, char ** argv){
 	int i;
 	char wr_buf[] = {TB1, RDMSG, RDMSG};
@@ -197,10 +210,23 @@ int main(int argc, char ** argv){
 		exit(1);
 	}
 	while (1){
+		wr_buf[0] = TB1;
 		digitalWrite(CS_PIN, LOW);
-		char * buf = spi_xfer(fd, wr_buf);
+		char * buf1 = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
-		printResults(buf);
+		wr_buf[0] = TB2;
+		digitalWrite(CS_PIN, LOW);
+		char * buf2 = spi_xfer(fd, wr_buf);
+		digitalWrite(CS_PIN, HIGH);
+		wr_buf[0] = TB3;
+		digitalWrite(CS_PIN, LOW);
+		char * buf3 = spi_xfer(fd, wr_buf);
+		digitalWrite(CS_PIN, HIGH);
+		wr_buf[0] = TB4;
+		digitalWrite(CS_PIN, LOW);
+		char * buf4 = spi_xfer(fd, wr_buf);
+		digitalWrite(CS_PIN, HIGH);
+		printResults4ch(buf1, buf2, buf3, buf4);
 //		usleep(1500);
 	}
 	close(fd);
