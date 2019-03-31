@@ -155,10 +155,10 @@ float lpf(int ind, float sig){
 	return sig;
 }
 
-void printResults(char * buf){
+void printResults(int ind, char * buf){
 	uint16_t msg = (buf[0] << 5) | (buf[1]>>3);
 	float msg_filt = (float)msg;//(float)reverse((uint32_t)msg, 12);
-	msg_filt = lpf(0,msg_filt);
+	msg_filt = lpf(ind,msg_filt);
 	//if (msg == 0) return;
 	printf("%.2f, ",msg_filt );
 	return;
@@ -205,7 +205,7 @@ int main(int argc, char ** argv){
 			digitalWrite(CS_PIN, LOW);
 			char * buf = spi_xfer(fd, wr_buf);
 			digitalWrite(CS_PIN, HIGH);
-			printResults(buf);
+			printResults(i,buf);
 		}
 		printf("\n");
 		// wr_buf[0] = TB1;
