@@ -18,7 +18,7 @@
 int fd;
 int com_serial;
 unsigned char wr_buf[] = {TB1, RDMSG, RDMSG};
-const float lpf_beta = 0.025;
+float lpf_beta = 0.025;
 int failcount;
 float prev_dat = 0;
 
@@ -169,14 +169,15 @@ int main(int argc, char ** argv){
 	int i;
 	char wr_buf[] = {TB1, RDMSG, RDMSG};
 	char rd_buf[3];;
-	if ( argc < 2){
-		printf("Usage:\n%s [device]\n", argv[0]);
+	if ( argc < 3){
+		printf("Usage:\n%s [device] [lpf_beta]\n", argv[0]);
 		exit(1);
 	}
 	wiringPiSetup();
 	digitalWrite(CS_PIN, HIGH);
 	pinMode(SSTRB_PIN, INPUT);
 	fd =  spi_init(argv[1]);
+	lpf_beta = atof(argv[2]);
 	//fd = open(argv[1], O_RDWR);
 	printf("Initial result = %d\n", fd);
 
