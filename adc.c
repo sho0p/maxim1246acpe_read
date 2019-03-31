@@ -197,12 +197,13 @@ int main(int argc, char ** argv){
 		printf("%s: Device %s is not found\n", argv[0], argv[1]);
 		exit(1);
 	}
-	while(1){
+	for(i = 0; i < 1000; i++){
 		digitalWrite(CS_PIN, LOW);
 		char * buf = spi_xfer(fd, wr_buf);
 		digitalWrite(CS_PIN, HIGH);
+//		printf("i: %d\n",i);
 		printResults(buf);
-		usleep(1500);
+//		usleep(1500);
 	}
 	close(fd);
 	return 0;
